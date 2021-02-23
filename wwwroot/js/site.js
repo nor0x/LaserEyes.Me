@@ -40,5 +40,12 @@ window.functions = {
             ctx.drawImage(eye1, oneX, oneY, oneSize, oneSize);
         }
         bgimg.src = base;
+    },
+
+    download: function () {
+        var link = document.createElement('a');
+        link.download = 'lasereyes.png';
+        link.href = document.getElementById('myCanvas').toDataURL()
+        link.click();
     }
 }

@@ -5,10 +5,14 @@
     <div class="e-container">
         <h3 class="size-3"> 💥👀</h3>
         <h5 class="size-5">laser eyes yourself</h5>
-        <h6 class="size-6">load an image and click your eyes!</h6>
+        <h6 class="size-6">load an image and select your eyes!</h6>
         @if (gotFile)
         {
             <canvas id="myCanvas" width=500 height=500 />
+            <div class="e-col-4 centered">
+                <a class="e-btn outlined rounded warning" @onclick="download">download</a>
+            </div>
+
         }
         else
         {
@@ -25,8 +29,9 @@
     private IList<string> imageDataUrls = new List<string>();
     private bool gotFile;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task download()
     {
+        await _js.InvokeVoidAsync("functions.download");
     }
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
@@ -46,9 +51,5 @@
         StateHasChanged();
 
         await _js.InvokeVoidAsync("functions.paint", imageDataUrl);
-
-
-
-
     }
 }
