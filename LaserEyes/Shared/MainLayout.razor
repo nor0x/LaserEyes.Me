@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+
+  <main class="e-face e-fullscreen">
+    <nav class="e-nav no-bg">
+      <i class="e-distribution"></i>
+            <a class="e-btn circle danger"><i class="coffee-button"></i></a>
+
+    </nav>
+    @Body
+    @if (showInfo)
+	 {
+        <div class="e-col-6 centered">
+            <div class="e-alert rounded blue">
+                <a href="https://decrypt.co/58302/elon-musk-bitcoin-advocates-have-laser-eyes-on-twitter-heres-why" target="_bank">https://decrypt.co/58302/elon-musk-bitcoin-advocates-have-laser-eyes-on-twitter-heres-why</a>
+            </div>
+        </div>
+    }
+    <div class="e-col-4 centered">
+        <a @onclick="toggleInfo" class="e-btn anime sky">wtf?!</a>
+    </div>
+
+
+  </main>
+
+  @code
+  {
+    private bool showInfo;
+
+    private void toggleInfo()
+    {
+        showInfo = !showInfo;
+    }
+  }

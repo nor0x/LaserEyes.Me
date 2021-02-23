@@ -1,0 +1,52 @@
+﻿@page "/"
+@inject IJSRuntime _js;
+
+<section class="face-body centered eUp">
+    <div class="e-container">
+        <h3 class="size-3">laser eyes yourself 💥👀</h3>
+        <h4 class="size-4">load an image and click your eyes!</h4>
+        @if (gotFile)
+        {
+            <canvas id="myCanvas" width=500 height=500 />
+        }
+        else
+        {
+            <div class="drag-drop-zone">
+                <InputFile OnChange="@OnInputFileChange" />
+                drop profile image..
+            </div>
+        }
+    </div>
+</section>
+
+
+@code{
+    private IList<string> imageDataUrls = new List<string>();
+    private bool gotFile;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/jpg";
+        var imageFile = e.File;
+
+        var resizedImageFile = await imageFile.RequestImageFileAsync(format,
+            500, 500);
+        var buffer = new byte[resizedImageFile.Size];
+        var stream = resizedImageFile.OpenReadStream();
+        await stream.ReadAsync(buffer);
+
+        var imageDataUrl = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        gotFile = true;
+        StateHasChanged();
+
+        await _js.InvokeVoidAsync("functions.paint", imageDataUrl);
+
+
+
+
+    }
+}
