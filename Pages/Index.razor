@@ -3,8 +3,9 @@
 
 <section class="face-body centered eUp">
     <div class="e-container">
-        <h3 class="size-3">laser eyes yourself 💥👀</h3>
-        <h4 class="size-4">load an image and click your eyes!</h4>
+        <h3 class="size-3"> 💥👀</h3>
+        <h5 class="size-5">laser eyes yourself</h5>
+        <h6 class="size-6">load an image and click your eyes!</h6>
         @if (gotFile)
         {
             <canvas id="myCanvas" width=500 height=500 />
@@ -13,7 +14,7 @@
         {
             <div class="drag-drop-zone">
                 <InputFile OnChange="@OnInputFileChange" />
-                drop profile image..
+                <p>drop profile image...</p>
             </div>
         }
     </div>
