@@ -1,5 +1,5 @@
 window.functions = {
-    paint: function (base) {
+    paint: function(base) {
         var c = document.getElementById("myCanvas");
         var rect;
 
@@ -24,10 +24,8 @@ window.functions = {
         ctx.fillRect(0, 0, c.width, c.height);
 
         var bgimg = new Image();
-        bgimg.onload = function () {
-            console.log("first rect: " + rect);
+        bgimg.onload = function() {
             rect = c.getBoundingClientRect();
-            console.log("new rect: " + rect);
 
             c.width = bgimg.width;
             c.height = bgimg.height;
@@ -42,7 +40,7 @@ window.functions = {
         bgimg.src = base;
     },
 
-    download: function () {
+    download: function() {
         var link = document.createElement('a');
         link.download = 'lasereyes.png';
         link.href = document.getElementById('myCanvas').toDataURL()
