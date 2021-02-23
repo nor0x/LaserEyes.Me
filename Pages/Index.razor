@@ -35,6 +35,7 @@
 
         var resizedImageFile = await imageFile.RequestImageFileAsync(format,
             500, 500);
+
         var buffer = new byte[resizedImageFile.Size];
         var stream = resizedImageFile.OpenReadStream();
         await stream.ReadAsync(buffer);

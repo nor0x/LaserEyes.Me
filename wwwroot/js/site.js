@@ -1,15 +1,12 @@
 window.functions = {
     paint: function (base) {
-
-        console.log(base);
-
         var c = document.getElementById("myCanvas");
+        var rect;
 
         c.addEventListener("click", canvasClick);
-        var rect = c.getBoundingClientRect();
 
         function canvasClick(event) {
-            console.log("click: " + event)
+            rect = c.getBoundingClientRect();
             oneX = event.clientX - rect.left - (oneSize / 2);
             oneY = event.clientY - rect.top - (oneSize / 2);
 
@@ -24,13 +21,18 @@ window.functions = {
         var twoY = 0;
 
         var ctx = c.getContext("2d");
-        ctx.fillStyle = "blue";
         ctx.fillRect(0, 0, c.width, c.height);
 
         var bgimg = new Image();
         bgimg.onload = function () {
-            console.log("bg loaded")
-            ctx.drawImage(bgimg, 0, 0, c.width, c.height);
+            console.log("first rect: " + rect);
+            rect = c.getBoundingClientRect();
+            console.log("new rect: " + rect);
+
+            c.width = bgimg.width;
+            c.height = bgimg.height;
+            ctx.drawImage(bgimg, 0, 0, bgimg.width, bgimg.height);
+
         }
 
         var eye1 = new Image();
