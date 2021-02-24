@@ -6,11 +6,18 @@ var oneSizeX = 35;
 var oneSizeY = 35;
 var oneX = 0;
 var oneY = 0;
+var base = undefined;
+var eye1;
 
 window.functions = {
 
 
-    paint: function(base) {
+    paint: function(b) {
+        if (b != "") {
+            base = b;
+        } else {
+            eye1.src = "";
+        }
         var c = document.getElementById("myCanvas");
         var rect;
 
@@ -37,7 +44,7 @@ window.functions = {
 
         }
 
-        var eye1 = new Image();
+        eye1 = new Image();
         eye1.onload = function() {
             ctx.drawImage(eye1, oneX, oneY, oneSizeW, oneSizeH);
         }
@@ -50,12 +57,12 @@ window.functions = {
         link.href = document.getElementById('myCanvas').toDataURL()
         link.click();
     },
-    setSrc: function (i) {
+    setSrc: function(i) {
         var it = JSON.parse(i);
         src = it.Src;
         oneSizeW = it.Width;
         oneSizeH = it.Height;
         oneSizeX = it.X;
         oneSizeY = it.Y;
-    }
+    },
 }

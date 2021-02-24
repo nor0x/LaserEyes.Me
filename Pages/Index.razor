@@ -33,6 +33,7 @@
                         }
                     }
                 }
+                <a class="e-btn sky" @onclick="clearCanvas">clear</a>
             </div>
         }
         else
@@ -105,6 +106,11 @@
     private async Task download()
     {
         await _js.InvokeVoidAsync("functions.download");
+    }
+
+    private async Task clearCanvas()
+    {
+        await _js.InvokeVoidAsync("functions.paint", "");
     }
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
