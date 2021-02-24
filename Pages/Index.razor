@@ -1,5 +1,7 @@
 ﻿@page "/"
 @inject IJSRuntime _js;
+@using System.Text.Json
+
 
 <section class="face-body centered eUp">
     <div class="e-container">
@@ -12,7 +14,26 @@
             <div class="e-col-4 centered">
                 <a class="e-btn outlined rounded warning" @onclick="download">download</a>
             </div>
-
+            <div class="e-container">
+                @{
+                    for(int i = 0; i < imgs.Count(); i++)
+                    {
+                        var count = i;
+                        if (selection.ElementAt(count))
+                        {
+                            <a class="e-btn anime warning laser-button">
+                              <img class="mr-3" src=@imgs.ElementAt(count) style="max-width:65px;">
+                            </a>
+                        }
+                        else
+                        {
+                            <a @onclick="() => toggle(imgs.ElementAt(count))" class="e-btn anime warning inverted laser-button">
+                              <img class="mr-3" src=@imgs.ElementAt(count) style="max-width:65px;">
+                            </a>
+                        }
+                    }
+                }
+            </div>
         }
         else
         {
@@ -26,8 +47,60 @@
 
 
 @code{
-    private IList<string> imageDataUrls = new List<string>();
+    private List<string> imgs = new List<string>()
+    {
+        "./img/1.png",
+        "./img/2.png",
+        "./img/3.png",
+        "./img/4.png",
+        "./img/5.png",
+        "./img/6.png",
+    };
+
+    private List<(int w, int h, int x, int y)> sizes = new List<(int w, int h, int x, int y)>()
+    {
+        (70,70, 35, 35),
+        (170,221, 67, 37),
+        (170,135, 132, 30),
+        (170,135, 30, 30),
+        (427, 240, 213, 121),
+        (250, 140, 125, 70),
+    };
+
+    private List<bool> selection = new List<bool>()
+    {
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+    };
     private bool gotFile;
+
+    async Task toggle(string name)
+    {
+        for(int i = 0; i < selection.Count(); i++)
+        {
+            selection[i] = false;
+        }
+        var index = imgs.IndexOf(name);
+        selection[index] = true;
+
+        var it = new Item()
+        {
+            Src = (index + 1).ToString(),
+            Width = sizes[index].w,
+            Height = sizes[index].h,
+            X = sizes[index].x,
+            Y = sizes[index].y,
+        };
+
+        var item = JsonSerializer.Serialize(it);
+
+        await _js.InvokeVoidAsync("functions.setSrc", item);
+
+    }
 
     private async Task download()
     {
@@ -50,6 +123,16 @@
         gotFile = true;
         StateHasChanged();
 
+
         await _js.InvokeVoidAsync("functions.paint", imageDataUrl);
+    }
+
+    class Item
+    {
+        public string Src { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 }

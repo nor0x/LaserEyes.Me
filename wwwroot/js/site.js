@@ -1,4 +1,15 @@
+var src = "1";
+
+var oneSizeW = 70;
+var oneSizeH = 70;
+var oneSizeX = 35;
+var oneSizeY = 35;
+var oneX = 0;
+var oneY = 0;
+
 window.functions = {
+
+
     paint: function(base) {
         var c = document.getElementById("myCanvas");
         var rect;
@@ -7,18 +18,11 @@ window.functions = {
 
         function canvasClick(event) {
             rect = c.getBoundingClientRect();
-            oneX = event.clientX - rect.left - (oneSize / 2);
-            oneY = event.clientY - rect.top - (oneSize / 2);
+            oneX = event.clientX - rect.left - oneSizeX;
+            oneY = event.clientY - rect.top - oneSizeY;
 
-            eye1.src = "../img/1.png";
+            eye1.src = "../img/" + src + ".png";
         }
-
-        var oneSize = 70;
-        var twoSize = 100;
-        var oneX = 0;
-        var oneY = 0;
-        var twoX = 0;
-        var twoY = 0;
 
         var ctx = c.getContext("2d");
         ctx.fillRect(0, 0, c.width, c.height);
@@ -35,7 +39,7 @@ window.functions = {
 
         var eye1 = new Image();
         eye1.onload = function() {
-            ctx.drawImage(eye1, oneX, oneY, oneSize, oneSize);
+            ctx.drawImage(eye1, oneX, oneY, oneSizeW, oneSizeH);
         }
         bgimg.src = base;
     },
@@ -45,5 +49,13 @@ window.functions = {
         link.download = 'lasereyes.png';
         link.href = document.getElementById('myCanvas').toDataURL()
         link.click();
+    },
+    setSrc: function (i) {
+        var it = JSON.parse(i);
+        src = it.Src;
+        oneSizeW = it.Width;
+        oneSizeH = it.Height;
+        oneSizeX = it.X;
+        oneSizeY = it.Y;
     }
 }

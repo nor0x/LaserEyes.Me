@@ -9,6 +9,12 @@ body {
     background: #FDC500;
 }
 
+.laser-button {
+    width: 100px;
+    height: 100px;
+    text-align:center;
+}
+
 .e-face {
     background: #FDC500;
 }
